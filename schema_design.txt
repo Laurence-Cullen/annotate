@@ -1,0 +1,18 @@
+images:
+-id               INT
+-raw_path         TEXT
+-predictions_path TEXT
+-created_at       DATETIME
+-user_id          INT
+-hash             STRING
+
+objects:
+-id   INT
+-name TEXT
+
+detections:
+-id         INT
+-object_id  INT
+-image_id   INT
+-confidence FLOAT
+-created_at DATETIME
