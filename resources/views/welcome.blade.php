@@ -19,11 +19,11 @@
 </div>
 
 <div class="row">
-    <div class="col-3">
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
         @yield('left_header')
     </div>
 
-    <div class="input-group mb-3 col-6">
+    <div class="input-group mb-3 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 
         <input
             type="text"
@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    <div class="col-3">
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
         @yield('right_header')
     </div>
 
@@ -48,7 +48,7 @@
 <div class="row">
 
     @for($i = 0; $i < $cards; $i++)
-        <div class="card col-3">
+        <div class="card col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
             <img class="card-img-top img-fluid" src="{{ $imagePath }}" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
