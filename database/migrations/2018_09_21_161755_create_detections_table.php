@@ -16,7 +16,7 @@ class CreateDetectionsTable extends Migration
         Schema::create('detections', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('object_id');
-            $table->foreign('object_id')->references('id')->on('objects')->onDelete('cascade');
+            $table->foreign('object_id')->references('id')->on('detectable_objects')->onDelete('cascade');
             $table->unsignedInteger('image_id');
             $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
             $table->float('confidence');

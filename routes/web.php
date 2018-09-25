@@ -12,14 +12,22 @@
 */
 
 Route::get('/', function () {
+    $content = 'This is a longer card with supporting text below as a
+                natural lead-in to additional content.
+                This content is a little bit longer.';
+
+    $cards = 10;
+
     return view('welcome', [
-        "image_path" => ''
+        "imagePath" => '/image/chazz.jpg',
+        "content" => $content,
+        "cards" => $cards,
     ]);
 });
 
 
-Route::get('/image/{path}')->name('image');
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/image/{fileName}', 'Images@serve');
