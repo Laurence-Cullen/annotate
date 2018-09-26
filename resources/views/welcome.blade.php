@@ -15,7 +15,33 @@
 <div class="container">
 
 <div class="row">
-    <h1>Annotate</h1>
+    <div class="col-2"></div>
+    <div class="col-8">
+        <a href="{{ route('home') }}"><h1>Annotate</h1></a>
+    </div>
+
+    <div class="col-2">
+        @if(Auth::check())
+            <div class="dropdown">
+
+                <button
+                    class="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    {{ Auth::user()->name }}
+                </button>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ route('logoutRedirect') }}">Log out</a>
+                    <a class="dropdown-item" href="{{ route('myImages') }}">My images</a>
+                </div>
+            </div>
+        @endif
+    </div>
 </div>
 
 <div class="row">
@@ -23,7 +49,7 @@
         @yield('left_header')
     </div>
 
-    <form class="input-group mb-3 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" method="get" action="/search">
+    <form class="input-group mb-3 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" method="get" action="{{ route('search') }}">
 
         <input
             type="text"
@@ -40,17 +66,16 @@
 
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
         @if(auth::check())
-        <form action="/image/upload" method="post" enctype="multipart/form-data">
+        <form action="{{ route('upload') }}" method="post" enctype="multipart/form-data">
             @csrf
             <input type="file" name="image" value="image" id="image">
             <input type="submit">
         </form>
         @else
-            <a href="/login"><button type="button" class="btn btn-primary">Log in</button></a>
-            <a href="/register"><button type="button" class="btn btn-primary">Sign up</button></a>
+            <a href="{{ route('login') }}"><button type="button" class="btn btn-primary">Log in</button></a>
+            <a href="{{ route('register') }}"><button type="button" class="btn btn-primary">Sign up</button></a>
         @endif
     </div>
-
 </div>
 
 
@@ -63,7 +88,7 @@
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">{{ $content }}</p>
                 <p class="card-text">
-                    <small class="text-muted">Last updated 3 mins ago</small>
+                    <small class="text-muted">{{ $image->created_at->diffForHumans() }}</small>
                 </p>
             </div>
         </div>

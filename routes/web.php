@@ -11,22 +11,13 @@
 |
 */
 
-use App\UploadedImage;
 
-Route::get('/', function () {
-    $content = 'This is a longer card with supporting text below as a
-                natural lead-in to additional content.
-                This content is a little bit longer.';
-
-    return view('welcome', [
-        "images" => UploadedImage::all(),
-        "content" => $content,
-    ]);
-})->name('home');
-
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/search', 'HomeController@search')->name('search');
+Route::get('/my_images', 'HomeController@myImages')->name('myImages');
 
 Auth::routes();
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logoutRedirect')->name('logoutRedirect');
 
-//Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/image/{fileName}', 'Images@serve');
-Route::post('/image/upload', 'Images@upload');
+Route::post('/image/upload', 'Images@upload')->name('upload');
