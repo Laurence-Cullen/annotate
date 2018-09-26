@@ -12,7 +12,8 @@ class MyImages extends Controller
         $this->middleware('auth');
     }
 
-    public function images() {
+    public function images()
+    {
         $content = 'This is a longer card with supporting text below as a
                 natural lead-in to additional content.
                 This content is a little bit longer.';

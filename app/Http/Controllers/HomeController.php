@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\UploadedImage;
 use App\Detection;
 use App\DetectableObject;
@@ -58,7 +59,7 @@ class HomeController extends Controller
                 $image = $detection->image;
 
                 // if images does not contain image already add it to the collection
-                if (!$images.contains($image)) {
+                if (!$images->contains($image)) {
                     $images = $images->concat($image);
                 }
             }
