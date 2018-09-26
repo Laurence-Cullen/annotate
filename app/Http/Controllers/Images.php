@@ -31,6 +31,6 @@ class Images extends Controller
             'user_id' => Auth::id()
         ]);
 
-        return redirect()->route('home');
+        return redirect()->route($_POST['route']);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MyImages extends Controller
 {
@@ -16,8 +17,8 @@ class MyImages extends Controller
                 natural lead-in to additional content.
                 This content is a little bit longer.';
 
-        return view('welcome', [
-            "images" => \Auth::user()->uploadedImages,
+        return view('myImages', [
+            "images" => Auth::user()->uploadedImages,
             "content" => $content,
         ]);
     }
