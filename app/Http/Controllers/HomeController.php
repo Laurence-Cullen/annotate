@@ -51,15 +51,4 @@ class HomeController extends Controller
             "content" => $content,
         ]);
     }
-
-    public function myImages() {
-        $content = 'This is a longer card with supporting text below as a
-                natural lead-in to additional content.
-                This content is a little bit longer.';
-
-        return view('welcome', [
-            "images" => \Auth::user()->uploadedImages,
-            "content" => $content,
-        ]);
-    }
 }

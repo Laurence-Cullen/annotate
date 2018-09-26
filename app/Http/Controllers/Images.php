@@ -13,14 +13,13 @@ class Images extends Controller
         $storagePath = storage_path("images/$fileName");
         return Image::make($storagePath)->response('jpg');
     }
+
     public static function upload() {
         // read image from temporary file
         $img = Image::make($_FILES['image']['tmp_name']);
-
         $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
 
         $hash = rand(0, 1e10);
-
         $filename = "$hash.$extension";
 
         // save image
@@ -32,5 +31,6 @@ class Images extends Controller
             'user_id' => Auth::id()
         ]);
 
-        return redirect()->route('home');    }
+        return redirect()->route('home');
+    }
 }
