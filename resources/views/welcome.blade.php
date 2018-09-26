@@ -36,7 +36,7 @@
                 </button>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{{ route('logoutRedirect') }}">Log out</a>
+                    <a class="dropdown-item" href="{{ url('/logout') }}">Log out</a>
                     <a class="dropdown-item" href="{{ route('myImages') }}">My images</a>
                 </div>
             </div>

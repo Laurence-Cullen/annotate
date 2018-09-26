@@ -13,11 +13,13 @@
 
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index');
+
 Route::get('/search', 'HomeController@search')->name('search');
 Route::get('/my_images', 'HomeController@myImages')->name('myImages');
 
 Auth::routes();
-Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logoutRedirect')->name('logoutRedirect');
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::get('/image/{fileName}', 'Images@serve');
 Route::post('/image/upload', 'Images@upload')->name('upload');

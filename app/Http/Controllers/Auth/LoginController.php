@@ -19,15 +19,8 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers {
-        logout as performLogout;
-    }
+    use AuthenticatesUsers;
 
-    public function logoutRedirect(Request $request)
-    {
-        $this->performLogout($request);
-        return redirect()->route('/');
-    }
     /**
      * Where to redirect users after login.
      *
