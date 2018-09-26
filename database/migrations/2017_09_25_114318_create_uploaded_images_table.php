@@ -13,13 +13,12 @@ class CreateUploadedImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('uploaded_images', function (Blueprint $table) {
             $table->increments('id');
             $table->text('raw_path');
             $table->text('predictions_path');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->text('hash');
             $table->timestamps();
         });
     }

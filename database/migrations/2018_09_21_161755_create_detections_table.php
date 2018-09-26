@@ -18,7 +18,7 @@ class CreateDetectionsTable extends Migration
             $table->unsignedInteger('object_id');
             $table->foreign('object_id')->references('id')->on('detectable_objects')->onDelete('cascade');
             $table->unsignedInteger('image_id');
-            $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
+            $table->foreign('image_id')->references('id')->on('uploaded_images')->onDelete('cascade');
             $table->float('confidence');
             $table->timestamps();
         });

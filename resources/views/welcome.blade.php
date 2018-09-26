@@ -23,7 +23,7 @@
         @yield('left_header')
     </div>
 
-    <div class="input-group mb-3 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+    <form class="input-group mb-3 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" method="get" action="/search">
 
         <input
             type="text"
@@ -34,12 +34,21 @@
         >
 
         <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button">Search</button>
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
         </div>
-    </div>
+    </form>
 
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
-        @yield('right_header')
+        @if(auth::check())
+        <form action="/image/upload" method="post" enctype="multipart/form-data">
+            @csrf
+            <input type="file" name="image" value="image" id="image">
+            <input type="submit">
+        </form>
+        @else
+            <a href="/login"><button type="button" class="btn btn-primary">Log in</button></a>
+            <a href="/register"><button type="button" class="btn btn-primary">Sign up</button></a>
+        @endif
     </div>
 
 </div>
@@ -47,9 +56,9 @@
 
 <div class="row">
 
-    @for($i = 0; $i < $cards; $i++)
+    @foreach($images as $image)
         <div class="card col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
-            <img class="card-img-top img-fluid" src="{{ $imagePath }}" alt="Card image cap">
+            <img class="card-img-top img-fluid" src="/image/{{ $image->raw_path }}" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">{{ $content }}</p>
@@ -58,7 +67,7 @@
                 </p>
             </div>
         </div>
-    @endfor
+    @endforeach
 
 </div>
 </div>
