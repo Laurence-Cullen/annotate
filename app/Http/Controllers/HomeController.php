@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\UploadedImage;
-use App\Detection;
 use App\DetectableObject;
-use Illuminate\Support\Collection;
-
-use App\User;
+use App\UploadedImage;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

@@ -77,7 +77,8 @@
             @if(auth::check())
                 <form action="{{ route('upload') }}"
                       method="post"
-                      enctype="multipart/form-data">
+                      enctype="multipart/form-data"
+                >
 
                     @section('currentRoute')
                         {{ Form::hidden('route', 'home') }}
