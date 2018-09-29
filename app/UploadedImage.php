@@ -84,14 +84,21 @@ class UploadedImage extends Model
 //        dd($detectionConfidences);
         foreach($detectionConfidences as $objectName => $confidence){
 
-            $detectableObjectId = DetectableObject::where('name', '=', $objectName)->firstOrFail()->id;
+            $detectableObject = DetectableObject::where('name', '=', $objectName)->first();
+
+            // adds new detectable object to db if not already present
+            if (!$detectableObject) {
+                DetectableObject::create(['name' => $objectName]);
+                $detectableObject = DetectableObject::where('name', '=', $objectName)->first();
+            }
 
             Detection::create([
-                'detectable_object_id' => $detectableObjectId,
+                'detectable_object_id' => $detectableObject->id,
                 'image_id' => $this->id,
                 'confidence' => $confidence,
             ]);
         }
+//        dd('all detections saved to db');
     }
 
     /**
