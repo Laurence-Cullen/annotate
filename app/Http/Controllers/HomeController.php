@@ -35,7 +35,6 @@ class HomeController extends Controller
         return view('index', [
             "images" => $images,
             "detectionsMap" => $detectionsMap,
-            "content" => $content,
         ]);
     }
 
@@ -72,13 +71,11 @@ class HomeController extends Controller
             $detectedObjects = [];
         }
 
-        $content = 'This is a longer card with supporting text below as a
-                natural lead-in to additional content.
-                This content is a little bit longer.';
+        $detectionsMap = Images::buildDetectionsMap($images);
 
         return view('search', [
             "images" => $images,
-            "content" => $content,
+            "detectionsMap" => $detectionsMap,
             "searchString" => $searchString,
         ]);
     }

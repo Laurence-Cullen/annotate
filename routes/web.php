@@ -15,7 +15,7 @@
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
 
-Route::get('/search', 'HomeController@ search')->name('search');
+Route::get('/search', 'HomeController@search')->name('search');
 Route::get('/my_images', 'MyImages@images')->name('myImages');
 
 Auth::routes();

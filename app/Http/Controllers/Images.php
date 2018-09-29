@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
+use Illuminate\Support\Collection;
 use Intervention\Image\Facades\Image;
 use App\UploadedImage;
 
@@ -54,7 +55,7 @@ class Images extends Controller
      * Return an associative array mapping UploadedImage ids to an array specifying how
      * many objects of different types were identified in the respective image.
      *
-     * @param $uploadedImages UploadedImage[]
+     * @param $uploadedImages Collection
      * @return array[]
      */
     public static function buildDetectionsMap($uploadedImages) {

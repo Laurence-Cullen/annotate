@@ -12,7 +12,7 @@ class Detection extends Model
 
     public function image()
     {
-        return $this->belongsTo('App\UploadedImage');
+        return $this->belongsTo('App\UploadedImage', 'uploaded_image_id');
     }
     public function detectableObject() {
         return $this->belongsTo('App\DetectableObject');

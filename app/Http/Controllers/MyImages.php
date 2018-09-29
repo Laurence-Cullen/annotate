@@ -14,13 +14,12 @@ class MyImages extends Controller
 
     public function images()
     {
-        $content = 'This is a longer card with supporting text below as a
-                natural lead-in to additional content.
-                This content is a little bit longer.';
+        $images = Auth::user()->uploadedImages;
+        $detectionsMap = Images::buildDetectionsMap($images);
 
         return view('myImages', [
-            "images" => Auth::user()->uploadedImages,
-            "content" => $content,
+            "images" => $images,
+            "detectionsMap" => $detectionsMap,
         ]);
     }
 }
