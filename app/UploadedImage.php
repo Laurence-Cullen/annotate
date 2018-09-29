@@ -75,7 +75,10 @@ class UploadedImage extends Model
         echo exec("mv $darknetPredictionsPath " . $this->absolutePredictionsPath());
     }
 
-    /** Saves the detections to the database.
+    /** Saves the detections to the database, adding new
+     * detectable objects if some are detected that are
+     * not already in the Detectable_objects table.
+     *
      * @param $detectionConfidences array
      */
     private function saveDetections($detectionConfidences) {
@@ -134,4 +137,3 @@ class UploadedImage extends Model
         return url("image/$this->predictions_path");
     }
 }
-
