@@ -15,6 +15,7 @@ class CreateUploadedImagesTable extends Migration
     {
         Schema::create('uploaded_images', function (Blueprint $table) {
             $table->increments('id');
+            $table->text('hash');
             $table->text('raw_path');
             $table->text('predictions_path');
             $table->unsignedInteger('user_id');

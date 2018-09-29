@@ -29,7 +29,7 @@ class HomeController extends Controller
                 natural lead-in to additional content.
                 This content is a little bit longer.';
 
-        return view('master', [
+        return view('index', [
             "images" => UploadedImage::all(),
             "content" => $content,
         ]);
@@ -52,15 +52,17 @@ class HomeController extends Controller
         // one object matching the search query
         if ($detected_object) {
             foreach ($detected_object->detections as $detection) {
+//                dd($detection);
                 $image = $detection->image;
-
+//                dd($image);
                 // if images does not contain image already add it to the collection
                 if (!$images->contains($image)) {
-                    $images = $images->concat($image);
+                    $images->push($image);
                 }
             }
         }
 
+//        dd($images);
         $content = 'This is a longer card with supporting text below as a
                 natural lead-in to additional content.
                 This content is a little bit longer.';
