@@ -49,8 +49,6 @@ class UploadedImage extends Model
 
         $absoluteImagePath = $this->absoluteRawPath();
 
-//        dd($absoluteImagePath);
-
         // build run command
         $runCommand = "~/darknet/darknet detect $darknetPath/cfg/yolov3.cfg $darknetPath/yolov3.weights $absoluteImagePath";
 
@@ -64,7 +62,7 @@ class UploadedImage extends Model
         // changing working directory back to directory this file is stored in
         // TODO find a more maintainable way to manage working directory
         chdir(dirname(__FILE__));
-        $this->predictions_path = storage_path("images/$imageFilename" . "_prediction.$predictionsExtension");
+        $this->predictions_path = "$imageFilename" . "_prediction.$predictionsExtension";
 
         // throwing object up to database and then pulling down auto incremented id value assigned to it
         $this->save();
@@ -74,14 +72,13 @@ class UploadedImage extends Model
 
         // move prediction image from its initial location in
         // $darknetPath to the correct location with the laravel project
-        echo exec("mv $darknetPredictionsPath $this->predictions_path");
+        echo exec("mv $darknetPredictionsPath " . $this->absolutePredictionsPath());
     }
 
     /** Saves the detections to the database.
      * @param $detectionConfidences array
      */
     private function saveDetections($detectionConfidences) {
-//        dd($detectionConfidences);
         foreach($detectionConfidences as $objectName => $confidence){
 
             $detectableObject = DetectableObject::where('name', '=', $objectName)->first();
@@ -98,7 +95,6 @@ class UploadedImage extends Model
                 'confidence' => $confidence,
             ]);
         }
-//        dd('all detections saved to db');
     }
 
     /**
@@ -129,6 +125,13 @@ class UploadedImage extends Model
 
     public function absolutePredictionsPath() {
         return storage_path("images/$this->predictions_path");
+    }
+
+    public function URLRaw() {
+        return url("image/$this->raw_path");
+    }
+    public function URLPredictions() {
+        return url("image/$this->predictions_path");
     }
 }
 

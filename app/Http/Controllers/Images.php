@@ -37,8 +37,6 @@ class Images extends Controller
         // run object detection routine on uploaded image
         $uploadedImage->detectObjects();
 
-        dd($request->post('route'));
-
         echo 'Made it to the end of upload script';
         // redirecting to route passed in through POST request
         return redirect()->route($request->post('route'));
