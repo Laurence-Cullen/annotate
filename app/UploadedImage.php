@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * App\UploadedImage
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int id
  * @property int|null user_id
  * @property string hash
+ * @property Collection detections
  */
 class UploadedImage extends Model
 {
@@ -82,7 +84,7 @@ class UploadedImage extends Model
      * @param $detectionConfidences array
      */
     private function saveDetections($detectionConfidences) {
-        foreach($detectionConfidences as $objectName => $confidence){
+        foreach($detectionConfidences as $objectName => $confidences){
 
             $detectableObject = DetectableObject::where('name', '=', $objectName)->first();
 
@@ -92,11 +94,13 @@ class UploadedImage extends Model
                 $detectableObject = DetectableObject::where('name', '=', $objectName)->first();
             }
 
-            Detection::create([
-                'detectable_object_id' => $detectableObject->id,
-                'image_id' => $this->id,
-                'confidence' => $confidence,
-            ]);
+            foreach($confidences as $confidence) {
+                Detection::create([
+                    'detectable_object_id' => $detectableObject->id,
+                    'uploaded_image_id' => $this->id,
+                    'confidence' => $confidence,
+                ]);
+            }
         }
     }
 
@@ -109,6 +113,7 @@ class UploadedImage extends Model
      */
     private function parseDetectionOutput($detectionOutput)
     {
+//        dd($detectionOutput);
         // associative array mapping from strings of object names
         // to the confidence with which they were detected
         $detectionConfidences = [];
@@ -117,7 +122,11 @@ class UploadedImage extends Model
             $objectName = $stringElements[0];
             $confidenceString = str_replace('%', '', $stringElements[1]);
 
-            $detectionConfidences[$objectName] = ((float)$confidenceString) / 100;
+            if(key_exists($objectName, $detectionConfidences)) {
+                $detectionConfidences[$objectName][] = (((float)$confidenceString) / 100);
+            } else {
+                $detectionConfidences[$objectName] = [((float)$confidenceString) / 100];
+            }
         }
         return $detectionConfidences;
     }
@@ -135,5 +144,30 @@ class UploadedImage extends Model
     }
     public function URLPredictions() {
         return url("image/$this->predictions_path");
+    }
+
+    /**
+     * Builds an associative array with of the form ['object name' => x]
+     * Where x is the number of times that an object of that name was detected in the image.
+     * @return array
+     */
+    public function detectedObjects() {
+        $detections = $this->detections;
+
+        $detectedObjects = [];
+
+        foreach ($detections as $detection) {
+            // summing up number of times each object was detected
+            if(!key_exists($detection->detectableObject->name, $detectedObjects)) {
+                $detectedObjects[$detection->detectableObject->name] = 1;
+            } else {
+                $detectedObjects[$detection->detectableObject->name]++;
+            }
+        }
+        return $detectedObjects;
+    }
+
+    public function detections() {
+        return $this->hasMany('App\Detection');
     }
 }

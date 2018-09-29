@@ -29,8 +29,12 @@ class HomeController extends Controller
                 natural lead-in to additional content.
                 This content is a little bit longer.';
 
+        $images = UploadedImage::all();
+        $detectionsMap = Images::buildDetectionsMap($images);
+
         return view('index', [
-            "images" => UploadedImage::all(),
+            "images" => $images,
+            "detectionsMap" => $detectionsMap,
             "content" => $content,
         ]);
     }
@@ -44,25 +48,30 @@ class HomeController extends Controller
     public function search(Request $request)
     {
         $searchString = $request->input('search-string');
-        $detected_object = DetectableObject::where('name', '=', $searchString)->first();
+
+        if(!$searchString) {
+            return redirect()->route('home');
+        }
+
+        $detectedObject = DetectableObject::where('name', '=', $searchString)->first();
 
         $images = collect();
 
         // build up a collection of all unique images which contain at least
         // one object matching the search query
-        if ($detected_object) {
-            foreach ($detected_object->detections as $detection) {
-//                dd($detection);
+        if ($detectedObject) {
+            foreach ($detectedObject->detections as $detection) {
                 $image = $detection->image;
-//                dd($image);
                 // if images does not contain image already add it to the collection
                 if (!$images->contains($image)) {
                     $images->push($image);
                 }
             }
+        } else {
+            // find all detectable objects that have been found in at least one image
+            $detectedObjects = [];
         }
 
-//        dd($images);
         $content = 'This is a longer card with supporting text below as a
                 natural lead-in to additional content.
                 This content is a little bit longer.';

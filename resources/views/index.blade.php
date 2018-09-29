@@ -4,6 +4,7 @@
     <div class="row">
 
         <script>
+            //
             function imageSwitcher(image, URLRaw, URLPredictions) {
                 if (image.src === URLRaw) {
                     image.src = URLPredictions;
@@ -17,7 +18,7 @@
         </script>
 
         @foreach($images as $image)
-            <div class="card col-xs-12 col-sm-6 col-md-3 col-lg-2 col-xl-2">
+            <div class="card col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
                 <img id="{{ $image->hash }}" class="card-img-top img-fluid" src="{{ $image->URLRaw() }}"
                      alt="Card image cap">
                 <div class="card-body">
@@ -31,7 +32,16 @@
                         Annotate
                     </button>
 
-                    <p class="card-text">{{ $content }}</p>
+                    <div class="card-text">
+                        Detected:
+                        <ul>
+                        @foreach($detectionsMap[$image->id] as $objectName => $numberOfDetections)
+                            <li>
+                                {{ $numberOfDetections }} {{ $objectName }}s
+                            </li>
+                        @endforeach
+                        </ul>
+                    </div>
                     <p class="card-text">
                         <small class="text-muted">{{ $image->created_at->diffForHumans() }}</small>
                     </p>
