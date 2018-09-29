@@ -24,9 +24,6 @@ Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/image/{fileName}', 'Images@serve');
 Route::post('/image/upload', 'Images@upload')->name('upload');
 
-Event::listen('illuminate.query',function($query){
-    var_dump($query);
-});
 
 //Route::get('/js_primes', function() {
 //   return view('js/jsPrimes');
