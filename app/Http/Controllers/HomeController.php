@@ -48,7 +48,7 @@ class HomeController extends Controller
     {
         $searchString = $request->input('search-string');
 
-        if(!$searchString) {
+        if (!$searchString) {
             return redirect()->route('home');
         }
 

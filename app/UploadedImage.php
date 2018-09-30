@@ -83,8 +83,9 @@ class UploadedImage extends Model
      *
      * @param $detectionConfidences array
      */
-    private function saveDetections($detectionConfidences) {
-        foreach($detectionConfidences as $objectName => $confidences){
+    private function saveDetections($detectionConfidences)
+    {
+        foreach ($detectionConfidences as $objectName => $confidences) {
 
             $detectableObject = DetectableObject::where('name', '=', $objectName)->first();
 
@@ -94,7 +95,7 @@ class UploadedImage extends Model
                 $detectableObject = DetectableObject::where('name', '=', $objectName)->first();
             }
 
-            foreach($confidences as $confidence) {
+            foreach ($confidences as $confidence) {
                 Detection::create([
                     'detectable_object_id' => $detectableObject->id,
                     'uploaded_image_id' => $this->id,
@@ -117,12 +118,12 @@ class UploadedImage extends Model
         // associative array mapping from strings of object names
         // to the confidence with which they were detected
         $detectionConfidences = [];
-        for($i=1; $i < count($detectionOutput); $i++) {
+        for ($i = 1; $i < count($detectionOutput); $i++) {
             $stringElements = explode(': ', $detectionOutput[$i]);
             $objectName = $stringElements[0];
             $confidenceString = str_replace('%', '', $stringElements[1]);
 
-            if(key_exists($objectName, $detectionConfidences)) {
+            if (key_exists($objectName, $detectionConfidences)) {
                 $detectionConfidences[$objectName][] = (((float)$confidenceString) / 100);
             } else {
                 $detectionConfidences[$objectName] = [((float)$confidenceString) / 100];
@@ -131,18 +132,23 @@ class UploadedImage extends Model
         return $detectionConfidences;
     }
 
-    public function absoluteRawPath() {
+    public function absoluteRawPath()
+    {
         return storage_path("images/$this->raw_path");
     }
 
-    public function absolutePredictionsPath() {
+    public function absolutePredictionsPath()
+    {
         return storage_path("images/$this->predictions_path");
     }
 
-    public function URLRaw() {
+    public function URLRaw()
+    {
         return url("image/$this->raw_path");
     }
-    public function URLPredictions() {
+
+    public function URLPredictions()
+    {
         return url("image/$this->predictions_path");
     }
 
@@ -151,14 +157,15 @@ class UploadedImage extends Model
      * Where x is the number of times that an object of that name was detected in the image.
      * @return array
      */
-    public function detectedObjects() {
+    public function detectedObjects()
+    {
         $detections = $this->detections;
 
         $detectedObjects = [];
 
         foreach ($detections as $detection) {
             // summing up number of times each object was detected
-            if(!key_exists($detection->detectableObject->name, $detectedObjects)) {
+            if (!key_exists($detection->detectableObject->name, $detectedObjects)) {
                 $detectedObjects[$detection->detectableObject->name] = 1;
             } else {
                 $detectedObjects[$detection->detectableObject->name]++;
@@ -167,7 +174,8 @@ class UploadedImage extends Model
         return $detectedObjects;
     }
 
-    public function detections() {
+    public function detections()
+    {
         return $this->hasMany('App\Detection');
     }
 }

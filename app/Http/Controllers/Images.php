@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 
 use Auth;
@@ -58,7 +59,8 @@ class Images extends Controller
      * @param $uploadedImages Collection
      * @return array[]
      */
-    public static function buildDetectionsMap($uploadedImages) {
+    public static function buildDetectionsMap($uploadedImages)
+    {
         $detectedObjectsMap = [];
 
         foreach ($uploadedImages as $uploadedImage) {

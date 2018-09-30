@@ -34,13 +34,27 @@
 
                     <div class="card-text">
                         Detected:
-                        <ul>
-                        @foreach($detectionsMap[$image->id] as $objectName => $numberOfDetections)
-                            <li>
-                                {{ $numberOfDetections }} {{ $objectName }}s
-                            </li>
-                        @endforeach
-                        </ul>
+                        @php
+                            $objectNames = array_keys($detectionsMap[$image->id]);
+                            $numberOfDetections = array_values($detectionsMap[$image->id]);
+                        @endphp
+
+                        @for($i=0; $i<count($objectNames); $i++)
+                            @php
+                                if($i === count($objectNames) - 1) {
+                                    $delim = ".";
+                                } else {
+                                    $delim = ", ";
+                                }
+                            @endphp
+
+                            @if($numberOfDetections[$i] === 1)
+                                {{ $numberOfDetections[$i] }} {{ $objectNames[$i] }}{{ $delim }}
+                            @else
+                                {{ $numberOfDetections[$i] }} {{ $objectNames[$i] }}s{{ $delim }}
+                            @endif
+
+                        @endfor
                     </div>
                     <p class="card-text">
                         <small class="text-muted">{{ $image->created_at->diffForHumans() }}</small>
