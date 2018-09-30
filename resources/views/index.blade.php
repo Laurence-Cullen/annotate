@@ -19,8 +19,14 @@
 
         @foreach($images as $image)
             <div class="card col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                <img id="{{ $image->hash }}" class="card-img-top img-fluid" src="{{ $image->URLRaw() }}"
-                     alt="Card image cap">
+                <a href="{{ url("/detail/$image->id") }}">
+                    <img
+                        id="{{ $image->hash }}"
+                        class="card-img-top img-fluid"
+                        src="{{ $image->URLRaw() }}"
+                        alt="Card image cap"
+                    >
+                </a>
                 <div class="card-body">
                     <h5 class="card-title">ID: {{ $image->id }}</h5>
 
@@ -57,7 +63,7 @@
                         @endfor
                     </div>
                     <p class="card-text">
-                        <small class="text-muted">{{ $image->created_at->diffForHumans() }}</small>
+                        <small class="text-muted">Uploaded {{ $image->created_at->diffForHumans() }}</small>
                     </p>
                 </div>
             </div>

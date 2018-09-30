@@ -68,4 +68,10 @@ class Images extends Controller
         }
         return $detectedObjectsMap;
     }
+
+    public static function detail($imageID) {
+        return view('detail', [
+            'image' => UploadedImage::find($imageID)
+        ]);
+    }
 }
