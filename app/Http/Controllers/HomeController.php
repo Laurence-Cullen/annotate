@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\DetectableObject;
 use App\UploadedImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use mysqli;
 
 class HomeController extends Controller
 {
@@ -55,6 +57,7 @@ class HomeController extends Controller
         $detectedObject = DetectableObject::where('name', '=', $searchString)->first();
 
         $images = collect();
+        $similarDetectableObjects = collect();
 
         // build up a collection of all unique images which contain at least
         // one object matching the search query
@@ -67,8 +70,25 @@ class HomeController extends Controller
                 }
             }
         } else {
-            // find all detectable objects that have been found in at least one image
-            $detectedObjects = [];
+
+            // establish database connection to use for real char escaping
+            $mysqli = new mysqli(
+                env("DB_HOST" , ''),
+                env("DB_USERNAME" , ''),
+                env("DB_PASSWORD" , ''),
+                env("DB_DATABASE" , ''),
+                env("DB_PORT" , '')
+            );
+
+            $sanitizedSearchString = $mysqli->real_escape_string($searchString);
+
+            $similarDetectableObjects = DB::select(
+                DB::raw(
+                    "SELECT name, MATCH (name) AGAINST ('$sanitizedSearchString' IN NATURAL LANGUAGE MODE) AS score
+                     FROM laravel_annotate.detectable_objects
+                     WHERE MATCH (name) AGAINST ('$sanitizedSearchString' IN NATURAL LANGUAGE MODE)"
+                )
+            );
         }
 
         $detectionsMap = Images::buildDetectionsMap($images);
@@ -77,6 +97,7 @@ class HomeController extends Controller
             "images" => $images,
             "detectionsMap" => $detectionsMap,
             "searchString" => $searchString,
+            "similarDetectableObjects" => $similarDetectableObjects
         ]);
     }
 }

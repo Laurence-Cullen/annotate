@@ -27,6 +27,9 @@ class CreateDetectableObjectsTable extends Migration
             }
             fclose($handle);
         }
+
+        DB::statement('ALTER TABLE detectable_objects ADD FULLTEXT INDEX ft_index (name) WITH PARSER ngram;');
+
     }
 
     /**
