@@ -72,6 +72,7 @@ class HomeController extends Controller
         } else {
 
             // establish database connection to use for real char escaping
+            // TODO
             $mysqli = new mysqli(
                 env("DB_HOST" , ''),
                 env("DB_USERNAME" , ''),

@@ -76,25 +76,16 @@
 
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
             @if(auth::check())
-                <form action="{{ route('upload') }}"
-                      method="post"
-                      enctype="multipart/form-data"
-                >
-
-                    @section('currentRoute')
-                        {{ Form::hidden('route', 'home') }}
-                    @show
-                    @csrf
-                    <input type="file" name="image" value="image" id="image">
-                    <input type="submit">
-                </form>
+                @include('uploadModal')
             @else
-                <a href="{{ route('login') }}">
-                    <button type="button" class="btn btn-primary">Log in</button>
-                </a>
-                <a href="{{ route('register') }}">
-                    <button type="button" class="btn btn-primary">Sign up</button>
-                </a>
+                <div class="row">
+                    <div class="col-6">
+                        @include('loginModal')
+                    </div>
+                    <div class="col-6">
+                        @include('signUpModal')
+                    </div>
+                </div>
             @endif
         </div>
     </div>
