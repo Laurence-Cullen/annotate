@@ -18,55 +18,60 @@
         </script>
 
         @foreach($images as $image)
-            <div class="card col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                <a href="{{ url("/detail/$image->id") }}">
-                    <img
-                        id="{{ $image->hash }}"
-                        class="card-img-top img-fluid"
-                        src="{{ $image->URLRaw() }}"
-                        alt="Card image cap"
-                    >
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">ID: {{ $image->id }}</h5>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                <div class="card">
 
-                    <button
-                        onclick="imageSwitcher(document.getElementById({{ $image->hash }}), '{{ $image->URLRaw() }}', '{{ $image->URLPredictions() }}')"
-                        type="button"
-                        class="btn btn-primary"
-                    >
-                        Annotate
-                    </button>
+                    <a href="{{ url("/detail/$image->id") }}">
+                        <img
+                            id="{{ $image->hash }}"
+                            class="card-img-top img-fluid"
+                            src="{{ $image->URLRaw() }}"
+                            alt="Card image cap"
+                        >
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">ID: {{ $image->id }}</h5>
 
-                    <div class="card-text">
-                        Detected:
-                        @php
-                            $objectNames = array_keys($detectionsMap[$image->id]);
-                            $numberOfDetections = array_values($detectionsMap[$image->id]);
-                        @endphp
+                        <button
+                            onclick="imageSwitcher(document.getElementById({{ $image->hash }}), '{{ $image->URLRaw() }}', '{{ $image->URLPredictions() }}')"
+                            type="button"
+                            class="btn btn-primary"
+                        >
+                            Annotate
+                        </button>
 
-                        @for($i=0; $i<count($objectNames); $i++)
+                        <div class="card-text">
+                            Detected:
                             @php
-                                if($i === count($objectNames) - 1) {
-                                    $delim = ".";
-                                } else {
-                                    $delim = ", ";
-                                }
+                                $objectNames = array_keys($detectionsMap[$image->id]);
+                                $numberOfDetections = array_values($detectionsMap[$image->id]);
                             @endphp
 
-                            @if($numberOfDetections[$i] === 1)
-                                {{ $numberOfDetections[$i] }} {{ $objectNames[$i] }}{{ $delim }}
-                            @else
-                                {{ $numberOfDetections[$i] }} {{ $objectNames[$i] }}s{{ $delim }}
-                            @endif
+                            @for($i=0; $i<count($objectNames); $i++)
+                                @php
+                                    if($i === count($objectNames) - 1) {
+                                        $delim = ".";
+                                    } else {
+                                        $delim = ", ";
+                                    }
+                                @endphp
 
-                        @endfor
+                                @if($numberOfDetections[$i] === 1)
+                                    {{ $numberOfDetections[$i] }} {{ $objectNames[$i] }}{{ $delim }}
+                                @else
+                                    {{ $numberOfDetections[$i] }} {{ $objectNames[$i] }}s{{ $delim }}
+                                @endif
+
+                            @endfor
+                        </div>
+                        <p class="card-text">
+                            <small class="text-muted">Uploaded {{ $image->created_at->diffForHumans() }}</small>
+                        </p>
+
                     </div>
-                    <p class="card-text">
-                        <small class="text-muted">Uploaded {{ $image->created_at->diffForHumans() }}</small>
-                    </p>
                 </div>
             </div>
+
         @endforeach
 
     </div>

@@ -25,20 +25,3 @@ Route::get('/image/{fileName}', 'Images@serve');
 Route::post('/image/upload', 'Images@upload')->name('upload');
 
 Route::get('/detail/{imageID}', 'Images@detail')->name('detail');
-
-Route::get('modal-signup', function() {
-    return view('signUpModal');
-});
-
-
-//Route::get('/js_primes', function() {
-//   return view('js/jsPrimes');
-//});
-//
-//Route::get('/js_dom', function() {
-//    return view('js/jsDOM');
-//});
-//
-//Route::get('/ajax', function() {
-//    return view('ajax');
-//});
