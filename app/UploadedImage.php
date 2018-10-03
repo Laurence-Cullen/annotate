@@ -39,7 +39,7 @@ class UploadedImage extends Model
     {
         // assuming darknet install in home directory and that YOLO3 model has been loaded
         // TODO fix absolute path!!!
-        $darknetPath = "/Users/laurence/darknet";
+        $darknetPath = "~/darknet";
 
         $imageFilename = pathinfo($this->raw_path)['filename'];
 
@@ -47,7 +47,7 @@ class UploadedImage extends Model
         echo exec("rm $darknetPath/predictions.*");
 
         // change working directory to darknet location, needed to run due to darknet idiosyncrasies
-        chdir($darknetPath);
+        chdir(getenv("HOME") . ltrim($darknetPath, '~'));
 
         $absoluteImagePath = $this->absoluteRawPath();
 
