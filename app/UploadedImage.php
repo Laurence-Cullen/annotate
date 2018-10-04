@@ -53,8 +53,7 @@ class UploadedImage extends Model
         $absoluteImagePath = $this->absoluteRawPath();
 
         // build run command
-//        $runCommand = "~/darknet/darknet detect $darknetPath/cfg/yolov3.cfg $darknetPath/yolov3.weights $absoluteImagePath";
-        $runCommand = "ttyecho -n /dev/pts/3 $absoluteImagePath";
+        $runCommand = "~/darknet/darknet detect $darknetPath/cfg/yolov3.cfg $darknetPath/yolov3.weights $absoluteImagePath";
 
         $output = [];
         // executing run command

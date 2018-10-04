@@ -25,3 +25,6 @@ Route::get('/image/{fileName}', 'Images@serve');
 Route::post('/image/upload', 'Images@upload')->name('upload');
 
 Route::get('/detail/{imageID}', 'Images@detail')->name('detail');
+
+Route::view('/searchdev', 'searchDev');
+Route::get('/detectable-object/find', 'SearchController@searchObjects')->name('find.object');

@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 container">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
             <div class="card">
                 <img
                     class="img-fluid"
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 container">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
             <div class="card">
                 <img
                     class="img-fluid"
