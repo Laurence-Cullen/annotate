@@ -28,7 +28,9 @@ class PaginationController extends Controller
      */
     public static function arrayToPaginator(array $array, $request) {
         $page = $request->get('page', 1); // Get the ?page=1 from the url
-        $perPage = 15; // Number of items per page
+
+        // TODO think of better place to put perPage config
+        $perPage = 12; // Number of items per page
         $offset = ($page * $perPage) - $perPage;
 
         array_slice($array, $offset, $perPage, true);

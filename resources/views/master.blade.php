@@ -59,21 +59,25 @@
 
         <form class="input-group mb-3 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" method="get"
               action="{{ route('search') }}">
+            <div class="row">
 
-            <input
-                id="search"
-                type="text"
-                name="search-string"
-                @yield('searchValue')
-                class="form-control"
-                placeholder="Search for an image containing..."
-                aria-label="Search for image which contains"
-                aria-describedby="basic-addon2"
-                autocomplete="off"
-            >
+                <div class="mb-3 col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
 
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    <input
+                        id="search"
+                        type="text"
+                        name="search-string"
+                        @yield('searchValue')
+                        class="form-control"
+                        placeholder="Search for an image containing..."
+                        aria-label="Search for image which contains"
+                        aria-describedby="basic-addon2"
+                        autocomplete="off">
+                </div>
+
+                <div class="input-group-append col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </div>
             </div>
         </form>
 

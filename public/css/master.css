@@ -5,3 +5,8 @@
 .divider {
     min-height: 10%;
 }
+
+/* Stopping twitter typeahead from collapsing */
+.twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
+    width: 100%;
+}

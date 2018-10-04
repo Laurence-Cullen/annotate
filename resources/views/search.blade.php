@@ -21,7 +21,10 @@
                                 $score = $similarDetectableObjects[$i]->score;
                             @endphp
 
-                            @if($score > 0)
+                            {{-- Tunable tolerance for how far out search suggestions should be
+                             allowed to be, lower allows for weaker suggestions.
+                            --}}
+                            @if($score > 0.01)
                                 <a href="{{ url("search?search-string=$name") }}">
                                     <h2>{{ $name }}</h2>
                                 </a>

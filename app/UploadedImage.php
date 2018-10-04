@@ -187,19 +187,20 @@ class UploadedImage extends Model
      * @return Collection
      * @throws Exception
      */
-    public function similarImages(int $maxImages) {
+    public function similarImages(int $maxImages)
+    {
         $images = UploadedImage::where('id', '!=', $this->id)->get();
 
         $similarityIndex = [];
 
         //build similarity index
-        foreach($images as $image) {
+        foreach ($images as $image) {
             $similarityIndex[$image->id] = $this->similarity($image);
         }
 
         // sort similarity values in descending order whilst maintaining key value associations
         // throw exception if it fails for any reason
-        if(!arsort($similarityIndex)) {
+        if (!arsort($similarityIndex)) {
             // TODO find more specific exception
             throw new Exception('Array sorting failed');
         }
@@ -210,14 +211,13 @@ class UploadedImage extends Model
         // iterating through images starting with the most similar first and stopping
         // when either the similarity score drops to zero maximum number of required
         // similar images is reached
-        foreach($similarityIndex as $imageID => $similarity) {
-            if(($similarity > 0) and (count($selectedImages) < $maxImages)) {
+        foreach ($similarityIndex as $imageID => $similarity) {
+            if (($similarity > 0) and (count($selectedImages) < $maxImages)) {
                 $selectedImages->push(UploadedImage::find($imageID));
             } else {
                 break;
             }
         }
-
         return $selectedImages;
     }
 
@@ -226,14 +226,15 @@ class UploadedImage extends Model
      * @param UploadedImage $comparativeImage
      * @return float
      */
-    private function similarity(UploadedImage $comparativeImage) {
+    private function similarity(UploadedImage $comparativeImage)
+    {
         $cumulativeSimilarity = 0.0;
 
         $detectedObjects = $this->detectedObjects();
         $comparativeDetectedObjects = $comparativeImage->detectedObjects();
 
-        foreach($detectedObjects as $objectName => $objects) {
-            if(key_exists($objectName, $comparativeDetectedObjects)) {
+        foreach ($detectedObjects as $objectName => $objects) {
+            if (key_exists($objectName, $comparativeDetectedObjects)) {
                 $comparativeObjects = $comparativeDetectedObjects[$objectName];
 
                 // increment cumulative similarity by up to one if images contain
@@ -241,7 +242,7 @@ class UploadedImage extends Model
                 if ($comparativeObjects === $objects) {
                     $cumulativeSimilarity++;
                 } elseif ($comparativeObjects > $objects) {
-                    $cumulativeSimilarity +=  $objects / $comparativeObjects;
+                    $cumulativeSimilarity += $objects / $comparativeObjects;
                 } else {
                     $cumulativeSimilarity += $comparativeObjects / $objects;
                 }
