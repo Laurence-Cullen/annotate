@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class Pagination extends Controller
+class PaginationController extends Controller
 {
     /**
      *  Creates a length aware paginator instance from a laravel collection.
@@ -16,7 +16,7 @@ class Pagination extends Controller
      */
     public static function collectionToPaginator($collection, Request $request)
     {
-        return Pagination::arrayToPaginator($collection->all(), $request);
+        return PaginationController::arrayToPaginator($collection->all(), $request);
     }
 
     /**
@@ -41,5 +41,4 @@ class Pagination extends Controller
             ['path' => $request->url(), 'query' => $request->query()] // We need this so we can keep all old query parameters from the url
         );
     }
-
 }

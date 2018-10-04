@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 use Intervention\Image\Facades\Image;
 use App\UploadedImage;
 
-class Images extends Controller
+class ImagesController extends Controller
 {
     /**
      * @param $fileName string

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class MyImages extends Controller
+class MyImagesController extends Controller
 {
     public function __construct()
     {
@@ -15,9 +15,9 @@ class MyImages extends Controller
     public function images(Request $request)
     {
         $images = Auth::user()->uploadedImages;
-        $detectionsMap = Images::buildDetectionsMap($images);
+        $detectionsMap = ImagesController::buildDetectionsMap($images);
 
-        $images = Pagination::collectionToPaginator($images, $request);
+        $images = PaginationController::collectionToPaginator($images, $request);
 
 //        dd($images);
 

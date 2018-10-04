@@ -29,7 +29,7 @@ class HomeController extends Controller
     {
         $images = UploadedImage::paginate(15);
 
-        $detectionsMap = Images::buildDetectionsMap($images);
+        $detectionsMap = ImagesController::buildDetectionsMap($images);
 
 
         return view('index', [
@@ -89,8 +89,8 @@ class HomeController extends Controller
                 )
             );
         }
-        $images = Pagination::collectionToPaginator($images, $request);
-        $detectionsMap = Images::buildDetectionsMap($images);
+        $images = PaginationController::collectionToPaginator($images, $request);
+        $detectionsMap = ImagesController::buildDetectionsMap($images);
 
         return view('search', [
             "images" => $images,
