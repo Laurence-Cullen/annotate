@@ -89,7 +89,7 @@ class HomeController extends Controller
                 )
             );
         }
-
+        $images = Pagination::collectionToPaginator($images, $request);
         $detectionsMap = Images::buildDetectionsMap($images);
 
         return view('search', [
