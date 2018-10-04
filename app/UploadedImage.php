@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
@@ -62,7 +63,6 @@ class UploadedImage extends Model
         $predictionsExtension = pathinfo($darknetPredictionsPath)['extension'];
 
         // changing working directory back to directory this file is stored in
-        // TODO find a more maintainable way to manage working directory
         chdir(dirname(__FILE__));
         $this->predictions_path = "$imageFilename" . "_prediction.$predictionsExtension";
 
@@ -159,6 +159,8 @@ class UploadedImage extends Model
      */
     public function detectedObjects()
     {
+
+        // TODO implement caching of value so save compute time
         $detections = $this->detections;
 
         $detectedObjects = [];
@@ -177,5 +179,74 @@ class UploadedImage extends Model
     public function detections()
     {
         return $this->hasMany('App\Detection');
+    }
+
+    /**
+     * Return a collection of up to $maxImages most similar images to instantiated UploadedImage.
+     * @param int $maxImages
+     * @return Collection
+     * @throws Exception
+     */
+    public function similarImages(int $maxImages) {
+        $images = UploadedImage::where('id', '!=', $this->id)->get();
+
+        $similarityIndex = [];
+
+        //build similarity index
+        foreach($images as $image) {
+            $similarityIndex[$image->id] = $this->similarity($image);
+        }
+
+        // sort similarity values in descending order whilst maintaining key value associations
+        // throw exception if it fails for any reason
+        if(!arsort($similarityIndex)) {
+            // TODO find more specific exception
+            throw new Exception('Array sorting failed');
+        }
+
+        // picking off up to $maxImages non zero similarity images off the top of the $sortedIndex array
+        $selectedImages = collect();
+
+        // iterating through images starting with the most similar first and stopping
+        // when either the similarity score drops to zero maximum number of required
+        // similar images is reached
+        foreach($similarityIndex as $imageID => $similarity) {
+            if(($similarity > 0) and (count($selectedImages) < $maxImages)) {
+                $selectedImages->push(UploadedImage::find($imageID));
+            } else {
+                break;
+            }
+        }
+
+        return $selectedImages;
+    }
+
+    /**
+     * Return a similarity index between this UploadedImage and the one passed in to compare it to.
+     * @param UploadedImage $comparativeImage
+     * @return float
+     */
+    private function similarity(UploadedImage $comparativeImage) {
+        $cumulativeSimilarity = 0.0;
+
+        $detectedObjects = $this->detectedObjects();
+        $comparativeDetectedObjects = $comparativeImage->detectedObjects();
+
+        foreach($detectedObjects as $objectName => $objects) {
+            if(key_exists($objectName, $comparativeDetectedObjects)) {
+                $comparativeObjects = $comparativeDetectedObjects[$objectName];
+
+                // increment cumulative similarity by up to one if images contain
+                // the same number of detections of a specific object
+                if ($comparativeObjects === $objects) {
+                    $cumulativeSimilarity++;
+                } elseif ($comparativeObjects > $objects) {
+                    $cumulativeSimilarity +=  $objects / $comparativeObjects;
+                } else {
+                    $cumulativeSimilarity += $comparativeObjects / $objects;
+                }
+            }
+        }
+        return $cumulativeSimilarity;
     }
 }

@@ -29,7 +29,7 @@
                 <img
                     class="img-fluid"
                     src="{{ $image->URLPredictions() }}"
-                    alt="Detailed view of non annotated image"
+                    alt="Detailed view of annotated image"
                 >
 
                 <div class="card-body">
@@ -38,41 +38,16 @@
             </div>
         </div>
     </div>
-    <div class="row container">
 
-        <div class="row">
-            <h3 class="col-12 centre-title">
-                Similar images:
-            </h3>
-        </div>
-
-        <div class="row">
-            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(15).jpg"
-                             alt="First slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(16).jpg"
-                             alt="Second slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(17).jpg"
-                             alt="Third slide">
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
+    <div class="row">
+        @foreach($image->similarImages(4) as $similarImage)
+            <div class="col-3">
+                <a href="{{ route('detail', $similarImage->id) }}">
+                    <img class="img-fluid" src="{{ $similarImage->URLRaw() }}" alt="Similar image to detailed view image">
                 </a>
             </div>
-        </div>
-
+        @endforeach
     </div>
+
 
 @endsection

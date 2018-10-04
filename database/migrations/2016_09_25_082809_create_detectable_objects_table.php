@@ -21,12 +21,12 @@ class CreateDetectableObjectsTable extends Migration
             $table->timestamps();
         });
 
-        if (($handle = fopen(storage_path('app/detectableObjects.csv'), 'r')) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
-                \App\DetectableObject::create(['name' => $data[0]]);
-            }
-            fclose($handle);
-        }
+//        if (($handle = fopen(storage_path('app/detectableObjects.csv'), 'r')) !== FALSE) {
+//            while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+//                \App\DetectableObject::create(['name' => $data[0]]);
+//            }
+//            fclose($handle);
+//        }
 
         DB::statement('ALTER TABLE detectable_objects ADD FULLTEXT INDEX ft_index (name) WITH PARSER ngram;');
 
