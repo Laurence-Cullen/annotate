@@ -8,7 +8,8 @@
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
 
-        <form action="{{ route('upload') }}"
+        <form id="upload_form"
+              action="{{ route('upload') }}"
               method="post"
               enctype="multipart/form-data"
               class="modal-content"
@@ -24,10 +25,10 @@
                     {{ Form::hidden('route', 'home') }}
                 @show
                 @csrf
-                <input type="file" name="image" value="image" id="image">
+                <input type="file" name="image" value="image" id="image" required>
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-primary" value="Upload image">
+                <input id="upload" type="submit" class="btn btn-primary" value="Upload image">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </form>

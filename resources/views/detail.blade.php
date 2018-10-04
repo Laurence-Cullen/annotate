@@ -38,10 +38,12 @@
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <h3 class="centre-title">Similar images:</h3>
+    </div>
     <div class="row">
         @foreach($image->similarImages(4) as $similarImage)
-            <div class="col-3">
+            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
                 <a href="{{ route('detail', $similarImage->id) }}">
                     <img class="img-fluid" src="{{ $similarImage->URLRaw() }}" alt="Similar image to detailed view image">
                 </a>

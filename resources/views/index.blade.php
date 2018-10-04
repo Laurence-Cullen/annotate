@@ -21,16 +21,16 @@
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
                 <div class="card">
 
-                    <a href="{{ url("/detail/$image->id") }}">
+                    <a href="{{ url("/detail/" . $image['id']) }}">
                         <img
-                            id="{{ $image->hash }}"
+                            id="{{ $image['hash'] }}"
                             class="card-img-top img-fluid"
                             src="{{ $image->URLRaw() }}"
                             alt="Card image cap"
                         >
                     </a>
                     <div class="card-body">
-                        <h5 class="card-title">ID: {{ $image->id }}</h5>
+                        <h5 class="card-title">ID: {{ $image['id'] }}</h5>
 
                         <button
                             onclick="imageSwitcher(document.getElementById({{ $image->hash }}), '{{ $image->URLRaw() }}', '{{ $image->URLPredictions() }}')"
@@ -74,6 +74,9 @@
 
         @endforeach
 
+    </div>
+    <div class="row">
+        {{ $images->links() }}
     </div>
 
 @endsection

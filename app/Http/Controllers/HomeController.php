@@ -27,7 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $images = UploadedImage::all();
+        $images = UploadedImage::paginate(15);
+
         $detectionsMap = Images::buildDetectionsMap($images);
 
 
