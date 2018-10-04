@@ -64,7 +64,7 @@
             highlight: true,
             minLength: 1
         }, {
-            name: 'users',
+            name: 'detectable_object',
             source: bloodhound,
             display: function (data) {
                 return data.name  //Input value to be set when you select a suggestion.

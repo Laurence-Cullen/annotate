@@ -21,7 +21,7 @@
                                 $score = $similarDetectableObjects[$i]->score;
                             @endphp
 
-                            @if($score > 2)
+                            @if($score > 0)
                                 <a href="{{ url("search?search-string=$name") }}">
                                     <h2>{{ $name }}</h2>
                                 </a>
