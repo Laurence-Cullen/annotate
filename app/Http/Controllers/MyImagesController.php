@@ -16,7 +16,7 @@ class MyImagesController extends Controller
     {
         $images = Auth::user()->uploadedImages;
         $detectionsMap = ImagesController::buildDetectionsMap($images);
-
+        $images = $images->sortByDesc('created_at');
         $images = PaginationController::collectionToPaginator($images, $request);
 
 //        dd($images);

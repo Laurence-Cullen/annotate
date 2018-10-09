@@ -30,7 +30,6 @@
                         >
                     </a>
                     <div class="card-body">
-                        <h5 class="card-title">ID: {{ $image['id'] }}</h5>
 
                         <button
                             onclick="imageSwitcher(document.getElementById({{ $image->hash }}), '{{ $image->URLRaw() }}', '{{ $image->URLPredictions() }}')"
@@ -57,15 +56,22 @@
                                 @endphp
 
                                 @if($numberOfDetections[$i] === 1)
-                                    {{ $numberOfDetections[$i] }} {{ $objectNames[$i] }}{{ $delim }}
+                                    <a href="{{ url("/search?search-string=$objectNames[$i]") }}">
+                                        {{ $numberOfDetections[$i] }} {{ $objectNames[$i] }}{{ $delim }}
+                                    </a>
+
                                 @else
-                                    {{ $numberOfDetections[$i] }} {{ $objectNames[$i] }}s{{ $delim }}
+                                    <a href="{{ url("/search?search-string=$objectNames[$i]") }}">
+                                        {{ $numberOfDetections[$i] }} {{ $objectNames[$i] }}s{{ $delim }}
+                                    </a>
+
                                 @endif
 
                             @endfor
                         </div>
                         <p class="card-text">
-                            <small class="text-muted">Uploaded {{ $image->created_at->diffForHumans() }}</small>
+                            <small class="text-muted">Uploaded by: {{ $image->user->name }}</small>
+                            <small class="text-muted">{{ $image->created_at->diffForHumans() }}</small>
                         </p>
 
                     </div>

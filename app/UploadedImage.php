@@ -250,4 +250,8 @@ class UploadedImage extends Model
         }
         return $cumulativeSimilarity;
     }
+
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
 }

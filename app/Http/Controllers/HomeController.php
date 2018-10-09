@@ -23,11 +23,14 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $images = UploadedImage::paginate(15);
+        $images = UploadedImage::all();
+        $images = $images->sortByDesc('created_at');
+        $images = PaginationController::collectionToPaginator($images, $request);
 
         $detectionsMap = ImagesController::buildDetectionsMap($images);
 
@@ -89,6 +92,7 @@ class HomeController extends Controller
                 )
             );
         }
+        $images = $images->sortByDesc('created_at');
         $images = PaginationController::collectionToPaginator($images, $request);
         $detectionsMap = ImagesController::buildDetectionsMap($images);
 

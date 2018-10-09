@@ -69,14 +69,14 @@
                         name="search-string"
                         @yield('searchValue')
                         class="form-control"
-                        placeholder="Search for an image containing..."
-                        aria-label="Search for image which contains"
+                        placeholder="Search for an object..."
+                        aria-label="Search for an object..."
                         aria-describedby="basic-addon2"
                         autocomplete="off">
                 </div>
 
                 <div class="input-group-append col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    <button class="btn btn-info" type="submit">Search</button>
                 </div>
             </div>
         </form>
@@ -138,7 +138,7 @@
             highlight: true,
             minLength: 1
         }, {
-            name: 'users',
+            name: 'detectable_objects',
             source: bloodhound,
             display: function (data) {
                 return data.name  //Input value to be set when you select a suggestion.
