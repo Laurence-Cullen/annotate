@@ -16,4 +16,4 @@ To test the darknet install run:
 ./darknet
 
 You should get the output:
-usage: ./darknet <function>
+usage: ./darknet "<function>"
