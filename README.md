@@ -2,6 +2,11 @@
 An image search engine which uses object detection to tag images for searching for images of objects.
 Includes type ahead and 'did you mean?' corrections for a friendly search experience.
 
+[![Annotate](https://i.imgur.com/kQEnmcr.png)](https://www.youtube.com/watch?v=BhA66KE47po "Annotate: an image search engine")
+
+
+# Install instructions
+
 Set up as you would a standard laravel project, there is one external dependancy, the Darknet ml framework.
 
 
