@@ -1,11 +1,11 @@
 # laravel_annotate
-Technical project for the Alacrity bootcamp.
+An image search engine which uses object detection to tag images for searching for images of objects.
+Includes type ahead and 'did you mean?' corrections for a friendly search experience.
 
-Hi Nathan!
+Set up as you would a standard laravel project, there is one external dependancy, the Darknet ml framework.
 
-I think this will be easier to install on a Unix system if you have one handy :)
 
-As an external dependancy I have the Darknet ml framework, to install that run:
+To install Darknet run:
 
 ```
 cd ~/
@@ -25,4 +25,4 @@ usage: ./darknet <function>
 ```
 
 if the install has completed successfully.
-If you hit any problems take a look at the darknet [project page](https://pjreddie.com/darknet/install/).
+If you hit any problems during the install take a look at the darknet [project page](https://pjreddie.com/darknet/install/).
